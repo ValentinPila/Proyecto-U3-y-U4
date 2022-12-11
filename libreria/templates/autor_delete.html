@@ -1,0 +1,25 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<body style="background-color: #825804;">
+{% if user.is_superuser %}
+    <h1 style="text-align: center; color: white;">Eliminar</h1>
+    <form action="" method="post">{% csrf_token %}
+        <h2 style="text-align: center; color: white;">¿Esta seguro que desea eliminar este autor?</h2>
+        <br>
+        <p class="text-center">
+            <a href="{% url 'autor' %}" class="btn btn-outline-warning">Cancelar</a>
+            <input type="submit" value="Borrar" class="btn btn-dark" style="background-color: #684807;">
+        </p>
+    </form>
+{% else %}
+    {% if user.is_authenticated %}
+        <h1 style="color: white;">No cuentas con los permisos necesarios</h1>
+    {% else %}
+        <script>
+            window.location.replace('http://127.0.0.1:8000/accounts/login/'); 
+        </script>
+    {% endif %}
+{% endif %}
+</body>
+{% endblock content %}

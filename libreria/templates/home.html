@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <main>
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <!--<img src="{% static 'images/ejercicios.jpg' %}"  class="d-block w-95" alt="Ejercicio" />-->
+                    <svg class="bd-placeholder-img"  width="100%" height="89%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#825804"></svg>
+                    
+                    <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Libros</h1>
+                        <p>Listado de los libros disponibles.</p>
+                        <p><a class="btn btn-lg btn-dark-outline" href="{% url 'libro' %}">Ver mas</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <svg class="bd-placeholder-img" width="100%" height="89%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#825804"/></svg>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Bibliotecas</h1>
+                        <p>Sucursales donde podras encontrar tus libros preferidos.</p>
+                        <p><a class="btn btn-lg btn-dark-outline" href="{% url 'biblioteca' %}">Ver mas</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <svg class="bd-placeholder-img" width="100%" height="89%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#825804"/></svg>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Autores</h1>
+                        <p>Autores que promocionamos.</p>
+                        <p><a class="btn btn-lg btn-dark-outline" href="{% url 'autor' %}">Ver mas</a></p>
+                    </div>
+                </div>
+            </div>
+
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </main>
+      
+      
+          <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    {% else %}
+        <script> 
+            window.location.replace('http://127.0.0.1:8000/accounts/login/'); 
+        </script>
+    {% endif %}
+{% endblock content %}

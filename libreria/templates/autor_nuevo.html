@@ -1,0 +1,17 @@
+{% extends 'base2.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<body style="background-color: #825804;">
+    <div style="color: white;">
+        <h1 style="text-align: center;">Nuevo Autor</h1>
+        <div style="margin:auto; width: 60%; border: 1px solid #000000; padding: 10px; margin-top: 5px;">
+            <form enctype="multipart/form-data" class="row g-3" action="" method="post">{% csrf_token %}
+                {{form|crispy}}
+                <br>
+                <input style="margin-left: 47%; min-width: 100px; max-width: 100px; background-color: #926711; color: white;" type="submit" value="Aceptar"></input>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock %}

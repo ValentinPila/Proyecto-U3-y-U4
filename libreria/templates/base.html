@@ -1,0 +1,56 @@
+{% load static %}
+<header>
+    <link rel="stylesheet" href="{% static 'css/bootcss/bootstrap.css' %}">
+    <script src="../static/js/bootstrap.js"></script>
+
+    <nav class="navbar navbar-dark" style="background-color: #926711;">
+
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-dark" aria-label="First navbar example">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#genetics" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#"> | Biblioteca 📚</a>
+            <div class="collapse navbar-collapse" id="genetics">
+                <ul class="navbar-nav me-auto mb-2">
+                    <li>
+                        <hr>
+                        <p style="color:white">Bienvenido: {{user.username}}</p>
+                        <hr>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'libro' %}">Libros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'autor' %}">Autores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'biblioteca' %}">Bibliotecas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'editorial' %}">Editoriales</a>
+                    </li>
+                    <hr>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'password_change' %}">Cambio de Contraseña</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Cerrar Sesion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </nav>
+    {% else %}
+        <a class="nav-link" style="color: white; margin-left: 30px; padding: 5px;" href="{% url 'account_login' %}"> Login</a>
+        <a class="nav-link" style="color: white; margin-right: 30px; padding: 5px;" href="{% url 'account_signup' %}"> Registrarse</a>
+    {% endif %}
+    </nav>
+</header>
+
+{% block content %}
+{% endblock content %}

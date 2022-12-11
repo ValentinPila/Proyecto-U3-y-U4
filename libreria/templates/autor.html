@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body style="background-color: #825804;">
+    {% if user.is_authenticated %}
+        <br>
+        {% if perms.libreria.Admin_autor %}
+            <div style="text-align: right; margin-right: 5%;">    
+                <button style="background-color: #684807;" type="button" class="btn btn-dark-outline">
+                    <a style="color: white;" class="nav-link" href="{% url 'autor_nuevo' %}">Nuevo autor</a>
+                </button>
+            </div>
+        {% else %}
+            {% if user.is_superuser %}
+                <div style="text-align: right; margin-right: 5%;">    
+                    <button style="background-color: #684807;" type="button" class="btn btn-dark-outline">
+                        <a style="color: white;" class="nav-link" href="{% url 'autor_nuevo' %}">Nuevo autor</a>
+                    </button>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <hr>
+
+        <form class="form-inline mt-2 mt-md-2" action="{% url 'busqueda_autor' %}" method="get">
+            <input name="q" class="form-control mr-sm-1" type="text" placeholder="Busca tu autor"
+            aria-label="Search"> 
+        </form>
+
+        <div class="container">
+            <div class="row">
+                {% for autor in Todos_Los_Autores %}
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                        <div class="card" style="background-color: #da950d; height: 500px;">
+                            {% if autor.Foto %}
+                                <img class="card-img-top" alt="Card image cap" style="width: 100%; height: 100%; text-align: center;" src="{{ autor.Foto.url }}" />
+                            {% else %}
+                                <h5>Sin Foto</h5>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{autor.Nombre}} {{autor.ApellidosP}} {{autor.ApellidosM}}</h5>
+                                <p class="card-text" style="text-align: right;">{{autor.FechaNac}}</p>
+                                <button class="btn btn-dark-outline" style="background-color: #825804;">
+                                    <a class="nav-link" href="{% url 'autor_detalle' autor.pk %}" style="color: white;">Mas informacion</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    {% else %}
+        <script> 
+            window.location.replace('http://127.0.0.1:8000/accounts/login/'); 
+        </script>
+    {% endif %}
+</body>
+
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body style="background-color: #825804;">
+    {% if user.is_authenticated %}
+        <br>
+        {% if perms.libreria.Admin_libro %}
+            <div style="text-align: right; margin-right: 5%;">    
+                <button style="background-color: #684807;" type="button" class="btn btn-dark-outline">
+                    <a style="color: white;" class="nav-link" href="{% url 'libro_nuevo' %}">Nuevo libro</a>
+                </button>
+            </div>
+        {% else %}
+            {% if user.is_superuser %}
+                <div style="text-align: right; margin-right: 5%;">    
+                    <button style="background-color: #684807;" type="button" class="btn btn-dark-outline">
+                        <a style="color: white;" class="nav-link" href="{% url 'libro_nuevo' %}">Nuevo libro</a>
+                    </button>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <hr>
+        <form class="form-inline mt-2 mt-md-2" action="{% url 'busqueda_libro' %}" method="get">
+            <input name="q" class="form-control mr-sm-1" type="text" placeholder="Busca tu libro"
+            aria-label="Search"> 
+        </form>
+        <hr>
+        <div class="container">
+            <div class="row">
+                {% for libro in Todos_Los_Libros %}
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                        <div class="card" style="background-color: #da950d;">
+                            {% if libro.Portada %}
+                                <img class="card-img-top" alt="Card image cap" style="width: 100%; height: 100%; text-align: center;" src="{{ libro.Portada.url }}" />
+                            {% else %}
+                                <h5>Sin Foto</h5>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{libro.Nombre}}</h5>
+                                <p class="card-text" style="text-align: right;">{{libro.Autor}}</p>
+                                <p style="color: white;" class="card-text"><small style="color: white;" class="text-muted">${{libro.Precio}}</small></p>
+                                <button class="btn btn-dark-outline" style="background-color: #825804;">
+                                    <a class="nav-link" href="{% url 'libro_detalle' libro.pk %}" style="color: white;">Mas informacion</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    {% else %}
+        <script> 
+            window.location.replace('http://127.0.0.1:8000/accounts/login/'); 
+        </script>
+    {% endif %}
+</body>
+
+{% endblock content %}

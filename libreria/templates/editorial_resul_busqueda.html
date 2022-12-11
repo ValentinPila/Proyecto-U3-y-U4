@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body style="background-color: #825804;">
+    {% if user.is_authenticated %}
+        <br>    
+        {% if user.is_superuser %}
+            <div style="text-align: right; margin-right: 5%;">    
+                <button style="background-color: #684807;" type="button" class="btn btn-dark-outline">
+                    <a style="color: white;" class="nav-link" href="{% url 'editorial_nuevo' %}">Nueva editorial</a>
+                </button>
+            </div>
+            <hr>
+        {% endif %}
+
+        <div class="container">
+            <div class="row">
+                {% for editorial in Busqueda_Editoriales %}
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                        <div class="card" style="background-color: #da950d; height: 550px;">
+                            {% if editorial.Logo %}
+                                <img class="card-img-top" alt="Card image cap" style="width: 100%; height: 100%; text-align: center;" src="{{ editorial.Logo.url }}" />
+                            {% else %}
+                                <h5>Sin Foto</h5>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{editorial.Nombre}}</h5>
+                                <p class="card-text" style="text-align: right;">{{editorial.FechaCreacion}}</p>
+                                <button class="btn btn-dark-outline" style="background-color: #825804;">
+                                    <a class="nav-link" href="{% url 'editorial_detalle' editorial.pk %}" style="color: white;">Mas informacion</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    {% else %}
+        <script> 
+            window.location.replace('http://127.0.0.1:8000/accounts/login/'); 
+        </script>
+    {% endif %}
+</body>
+
+{% endblock content %}

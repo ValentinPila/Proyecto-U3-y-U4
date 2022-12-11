@@ -1,0 +1,50 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<body style="background-color: #825804;">
+<br>
+    {% if user.is_authenticated %}
+    <h1 style="color:white; text-align: center;"> Informacion del autor </h1>
+        <div style="background-color: #684807; margin:auto; width: 50%; border: 1px solid #000000; padding: 10px; margin-top: 5px;">
+            <div style="color:white; ">
+                <p class="">Nombre: {{Detalle_Biblioteca.Nombre}}</p>
+                <p class="">Direccion: {{Detalle_Biblioteca.Direccion}}</p>
+                <p class="">Telefono: {{Detalle_Biblioteca.Telefono}}</p>
+                <p class="">Horario: {{Detalle_Biblioteca.HorarioApertura}} - {{Detalle_Biblioteca.HorarioCierre}}</p>
+            </div>
+        </div>
+        {% if user.is_superuser %}
+            <p class="text-center">
+                <a style="color:white;" class="nav-link" href="{% url 'biblioteca_editar' Detalle_Biblioteca.pk %}">Editar informacion</a> |
+                <a style="color:white;" class="nav-link" href="{% url 'biblioteca_delete' Detalle_Biblioteca.pk %}">Eliminar sucursal</a> |
+                <a style="color:white;" class="nav-link" href="{% url 'comentarios_biblioteca_nuevo' Detalle_Biblioteca.pk %}">Añadir comentario</a>
+            </p>
+        {% else %}
+            {% if perms.libreria.Admin_biblioteca %}
+                <p class="text-center">
+                    <a style="color:white;" class="nav-link" href="{% url 'biblioteca_editar' Detalle_Biblioteca.pk %}">Editar informacion</a> |
+                    <a style="color:white;" class="nav-link" href="{% url 'comentarios_biblioteca_nuevo' Detalle_Biblioteca.pk %}">Añadir comentario</a>
+                </p>
+            {% else %}
+                <p class="text-center">
+                    <a style="color:white;" class="nav-link" href="{% url 'comentarios_biblioteca_nuevo' Detalle_Biblioteca.pk %}">Añadir comentario</a>
+                </p>
+            {% endif %}
+        {% endif %}
+
+        <ul class="list-group list-group-flush">
+            {% for comentario in Detalle_Biblioteca.comentariosBiblioteca.all %}
+                <li style="background-color: #825804; color: white;" class="list-group-item">__________________________________________________________________________________________________________________________________________</li>
+                <li style="background-color: #825804; color: white;" class="list-group-item">{{comentario.creador}} escribio: {{comentario.comentario}}</li>
+                {% if user.is_superuser %}
+                    <a style="margin-left: 5%; background-color: #825804; color: white;" class="nav-link" href="{% url 'comentarios_biblioteca_delete' comentario.pk %}">Eliminar</a>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <script> 
+            window.location.replace('http://127.0.0.1:8000/accounts/login/'); 
+        </script>
+    {% endif %}
+</body>
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body style="background-color: #825804;">
+    {% if user.is_authenticated %}
+        <br>
+        {% if perms.libreria.Admin_biblioteca %}
+            <div style="text-align: right; margin-right: 5%;">    
+                <button style="background-color: #684807;" type="button" class="btn btn-dark-outline">
+                    <a style="color: white;" class="nav-link" href="{% url 'biblioteca_nuevo' %}">Nueva sucursal</a>
+                </button>
+            </div>
+        {% else %}
+            {% if user.is_superuser %}
+                <div style="text-align: right; margin-right: 5%;">    
+                    <button style="background-color: #684807;" type="button" class="btn btn-dark-outline">
+                        <a style="color: white;" class="nav-link" href="{% url 'biblioteca_nuevo' %}">Nueva sucursal</a>
+                    </button>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <hr>
+
+        <form class="form-inline mt-2 mt-md-2" action="{% url 'busqueda_biblioteca' %}" method="get">
+            <input name="q" class="form-control mr-sm-1" type="text" placeholder="Busca tu biblioteca de preferencia"
+            aria-label="Search"> 
+        </form>
+
+        <div class="container">
+            <div class="row">
+                {% for lib in Todas_Las_Bibliotecas %}
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                        <div class="card" style="background-color: #da950d;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{lib.Nombre}}</h5>
+                                <p class="">Horario: {{lib.HorarioApertura}} - {{lib.HorarioCierre}}</p>
+                                <button class="btn btn-dark-outline" style="background-color: #825804;">
+                                    <a class="nav-link" href="{% url 'biblioteca_detalle' lib.pk %}" style="color: white;">Mas informacion de la sucursal</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <script> 
+            window.location.replace('http://127.0.0.1:8000/accounts/login/'); 
+        </script>
+    {% endif %}
+</body>
+
+{% endblock content %}
