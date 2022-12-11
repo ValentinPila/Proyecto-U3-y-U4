@@ -1,0 +1,25 @@
+version: "3.10"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - STRIPE_TEST_PUBLISHABLE_KEY=pk_test_51M9Hs5GDyH7QHtIUVIQexCDfKYBxGLFPL5gyTmMowPrNkYEocLOzwohGJOs0rIUTVT2aHUlp8AJxyUWZcf1rM7Tu00coWdCWdV
+      - STRIPE_TEST_SECRET_KEY=sk_test_51M9Hs5GDyH7QHtIUTYosY7zYiumOXagWZQaWvi5oXwjEydlAASzEJjwLy25sEPLJEFVV8NuGTRW6LvFDj2HHLT8R00tC2BjQaI
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

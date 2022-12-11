@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body style="background-color: #825804;">
+    
+    <div style="color: white;">
+        <h1 style="text-align: center;" >Registrate</h1>
+        <hr>
+        <div style="margin:auto; width: 30%; border: 0.1px solid #000000; padding: 10px; margin-top: 5px;">
+            <form action="" method="post"> {% csrf_token %}
+                {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                    <br>
+                {% endfor %}
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btn-dark" style="background-color: #684807; text-align: center;">Aceptar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock content %}
+
+
+<!-- Anterior metodo
+    <form class="col-6" action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <hr>
+        <div style="text-align: center;">
+            <input type="submit" class="btn btn-dark"></input>
+        </div>
+    </form>
+-->

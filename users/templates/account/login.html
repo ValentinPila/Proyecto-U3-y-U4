@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <script> 
+            window.location.replace('http://127.0.0.1:8000/'); 
+        </script>
+    {% else %}
+
+        <style>
+            .redondo
+            {
+                background-color: #684807; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                -webkit-transition-duration: 0.4s; /* Safari */
+                transition-duration: 0.4s;
+                border-radius: 50%;
+            }
+
+            .redondo:hover
+            {
+                box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+        </style>
+
+        <body style="background-color: #825804;">    
+            <hr>
+            <div style="vertical-align: middle;">
+                <h1 style="text-align: center;  color: white;">Login</h1>
+                <br>
+                <form action="" method="post" style="text-align: center; color: white;">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br>
+                    <div style="text-align: center;">
+                        <input value="Entrar" type="submit" class="btn btn-dark-outline" style="background-color: #684807;"></input>
+                    </div>
+                    <hr>
+                    <button class="btn btn-dark-outline" style="background-color: #684807;">
+                        <a href="{% url 'password_reset' %}" style="color: white;" class="nav-link">¿Olvido su contraseña?</a>
+                    </button>
+                    <hr>
+                    <p style="text-align: center;">O ingrese con alguna red social</p>
+                    <button class="redondo"><a style="color:white" href="{% provider_login_url 'github' %}">Git</a></button>
+                </form>
+            </div>
+        </body>
+    {% endif %}
+{% endblock %}
